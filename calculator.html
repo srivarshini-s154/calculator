@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AMAZCALC</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="calculator-container">
+  <h1>AMAZCALC</h1>
+  <form method="POST" onsubmit="submitExpression()">
+    <input type="text" id="display" name="display" value="" readonly>
+    <input type="hidden" name="expression" id="expression">
+
+    <div class="buttons">
+      <button type="button" onclick="addToExpression('7')">7</button>
+      <button type="button" onclick="addToExpression('8')">8</button>
+      <button type="button" onclick="addToExpression('9')">9</button>
+      <button type="button" onclick="addToExpression('÷')">÷</button>
+
+      <button type="button" onclick="addToExpression('4')">4</button>
+      <button type="button" onclick="addToExpression('5')">5</button>
+      <button type="button" onclick="addToExpression('6')">6</button>
+      <button type="button" onclick="addToExpression('×')">×</button>
+
+      <button type="button" onclick="addToExpression('1')">1</button>
+      <button type="button" onclick="addToExpression('2')">2</button>
+      <button type="button" onclick="addToExpression('3')">3</button>
+      <button type="button" onclick="addToExpression('-')">−</button>
+
+      <button type="button" onclick="addToExpression('.')">.</button>
+      <button type="button" onclick="addToExpression('0')">0</button>
+      <button type="button" onclick="addToExpression('^')">^</button>
+      <button type="button" onclick="addToExpression('+')">+</button>
+
+      <button type="button" onclick="clearExpression()">C</button>
+      <button type="submit">=</button>
+    </div>
+  </form>
+</div>
+
+<script>
+  let expression = "";
+
+  function addToExpression(value) {
+    expression += value;
+    document.getElementById('display').value = expression;
+    document.getElementById('expression').value = expression;
+  }
+
+  function clearExpression() {
+    expression = "";
+    document.getElementById('display').value = "";
+    document.getElementById('expression').value = "";
+  }
+
+  function submitExpression() {
+    document.getElementById('expression').value = expression;
+  }
+
+  // Show result if returned from backend
+  const resultFromBackend = "{{ result }}";
+  if (resultFromBackend && resultFromBackend !== "") {
+    expression = resultFromBackend;
+    document.getElementById('display').value = resultFromBackend;
+  }
+</script>
+
+</body>
+</html>
